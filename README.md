@@ -1,16 +1,45 @@
-# React + Vite
+# Number Guesser
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React guessing game where the computer uses binary search to guess a number between 1 and 100.
 
-Currently, two official plugins are available:
+## How to Play
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Think of a number between 1 and 100
+2. Enter your number in the input field
+3. Click "Enter"
+4. Watch as the computer guesses your number and narrates each guess
+5. The computer uses binary search to find your number efficiently
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Binary search algorithm for fast number guessing
+- Real-time feedback showing each guess
+- Try counter to track how many attempts it takes
+- Play Again button to restart
+- Tailwind CSS styling with custom theme colors
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Vite
+- Tailwind CSS v4
+- JavaScript
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+## Project Structure
+
+- `src/App.jsx` - Main game component
+- `src/index.css` - Tailwind configuration and theme colors
+- `src/main.jsx` - React entry point
+
+## Theme Colors
+
+- **Primary:** #709775 (Green)
+- **Secondary:** #415d43 (Dark Green)
+- **Background:** #111d13 (Very Dark)
