@@ -6,6 +6,7 @@ function App() {
     const [varB, setVarB] = useState(100);
     const [varC, setVarC] = useState(0);
     const [tries, setTries] = useState(0);
+    const [isGameOver, setIsGameOver] = useState(false);
   const handleChange = (e) => {
     setNumber(e.target.value);
   };
@@ -26,7 +27,8 @@ function App() {
                 setVarA(0);
                 setVarB(100);
                 setNumber(0);
-                    setTries(0);
+                setTries(0);
+                setIsGameOver(true);
                 }
                 else if (num < newVarC) {
                     setVarB(newVarC);
@@ -51,19 +53,30 @@ function App() {
       <h1 className="subheading font-medium text-3xl text-center mt-2 font-mono text-secondary">
         Simply guesses the number lol.
       </h1>
-
-      <div className="flex items-center justify-center mt-10 ">
-        <input
-          type="text"
-          placeholder="Enter a number between 1 and 100"
-          className="mainInput bg-primary text-secondary placeholder:text-secondary focus:text-secondary border-none rounded-xl placeholder:text-center placeholder:text-3xl focus:border-none w-140 h-20 mt-20 text-center text-3xl "
-                  onChange={handleChange}
+          {isGameOver ? (
+              <div className = "flex items-center justfy-center flex-col mt-10 gap-0">
+              <h1 className="font-bold text-5xl text-center font-mono text-primary mt-5">
+              Game Over!
+                  </h1>
+                  <button className="bg-secondary text-primary font-bold text-3xl rounded-xl w-45 h-20 mt-5 hover:bg-secondary/80 transition duration-300 p-3" onClick={() => setIsGameOver(false)}>
+                      Play Again
+                      </button>
+          </div>)
+              : (
+                  <div className="flex items-center justify-center mt-10 ">
+                      <input
+                          type="text"
+                          placeholder="Enter a number between 1 and 100"
+                          className="mainInput bg-primary text-secondary placeholder:text-secondary focus:text-secondary border-none rounded-xl placeholder:text-center placeholder:text-3xl focus:border-none w-140 h-20 mt-20 text-center text-3xl "
+                          onChange={handleChange}
                   
-        />
-        <button className="bg-secondary text-primary font-bold text-3xl rounded-xl w-40 h-20 ml-5 mt-20 hover:bg-secondary/80 transition duration-300" onClick={handleButtonClick}>
-          Enter
-        </button>
-      </div>
+                      />
+                      <button className="bg-secondary text-primary font-bold text-3xl rounded-xl w-40 h-20 ml-5 mt-20 hover:bg-secondary/80 transition duration-300" onClick={handleButtonClick}>
+                          Enter
+                      </button>
+          
+                  </div>
+              )}
     </div>
   );
 }
