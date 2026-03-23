@@ -7,11 +7,13 @@ function App() {
   const [varC, setVarC] = useState(0);
   const [tries, setTries] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [isGuessing, setIsGuessing] = useState(false);
+
   const handleChange = (e) => {
     setNumber(e.target.value);
   };
 
-  const handleButtonClick = async() => {
+  const handleButtonClick = async () => {
     const num = Number(number);
     if (num < 1 || num > 100) {
       document.querySelector(".subheading").textContent =
@@ -19,31 +21,39 @@ function App() {
       return;
     }
 
-    let a = 0;
-    let b = 100;
-    let guess = 0;
-    let attempts = 0;
+    setIsGuessing(true);
+    try {
+      let a = 0;
+      let b = 100;
+      let guess = 0;
+      let attempts = 0;
 
-    while (true) {
-      guess = Math.floor((a + b) / 2);
+      while (true) {
+        guess = Math.floor((a + b) / 2);
         attempts++;
-        
-        await new Promise(resolve => setTimeout(resolve, 1000));
 
-      if (num === guess) {
-        document.querySelector(".subheading").textContent =
-          `The number is ${guess} and it took ${attempts} tries to guess it!`;
-        document.querySelector(".mainInput").value = "";
-        setIsGameOver(true);
-        break;
-      } else if (num < guess) {
-          document.querySelector(".subheading").textContent = `I guessed ${guess}, but it's too high!`;
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        if (num === guess) {
+          document.querySelector(".subheading").textContent =
+            `The number is ${guess} and it took ${attempts} tries to guess it!`;
+          document.querySelector(".mainInput").value = "";
+          setIsGameOver(true);
+          break;
+        } else if (num < guess) {
+          document.querySelector(
+            ".subheading"
+          ).textContent = `I guessed ${guess}, but it's too high!`;
           b = guess;
-          
-      } else {
-        document.querySelector(".subheading").textContent = `I guessed ${guess}, but it's too low!`;
-        a = guess;
+        } else {
+          document.querySelector(
+            ".subheading"
+          ).textContent = `I guessed ${guess}, but it's too low!`;
+          a = guess;
+        }
       }
+    } finally {
+      setIsGuessing(false);
     }
   };
 
@@ -74,18 +84,19 @@ function App() {
             placeholder="Enter a number between 1 and 100"
             className="mainInput bg-primary text-secondary placeholder:text-secondary focus:text-secondary border-none rounded-xl placeholder:text-center placeholder:text-3xl focus:border-none w-140 h-20 mt-20 text-center text-3xl "
             onChange={handleChange}
+            disabled={isGuessing}
           />
           <button
-            className="bg-secondary text-primary font-bold text-3xl rounded-xl w-40 h-20 ml-5 mt-20 hover:bg-secondary/80 transition duration-300"
+            className="bg-secondary text-primary font-bold text-3xl rounded-xl w-40 h-20 ml-5 mt-20 hover:bg-secondary/80 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleButtonClick}
+            disabled={isGuessing}
           >
-            Enter
+            {isGuessing ? "Guessing..." : "Enter"}
           </button>
         </div>
       )}
     </div>
   );
-    
 }
 
 export default App;
