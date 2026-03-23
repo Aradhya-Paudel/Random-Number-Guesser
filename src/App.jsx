@@ -8,6 +8,7 @@ function App() {
   const [tries, setTries] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isGuessing, setIsGuessing] = useState(false);
+  const [subheading, setSubheading] = useState("Simply guesses the number lol.");
 
   const handleChange = (e) => {
     setNumber(e.target.value);
@@ -16,8 +17,7 @@ function App() {
   const handleButtonClick = async () => {
     const num = Number(number);
     if (num < 1 || num > 100) {
-      document.querySelector(".subheading").textContent =
-        "Please enter a number between 1 and 100.";
+      setSubheading("Please enter a number between 1 and 100.");
       return;
     }
 
@@ -35,20 +35,17 @@ function App() {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         if (num === guess) {
-          document.querySelector(".subheading").textContent =
-            `The number is ${guess} and it took ${attempts} tries to guess it!`;
+          setSubheading(
+            `The number is ${guess} and it took ${attempts} tries to guess it!`
+          );
           document.querySelector(".mainInput").value = "";
           setIsGameOver(true);
           break;
         } else if (num < guess) {
-          document.querySelector(
-            ".subheading"
-          ).textContent = `I guessed ${guess}, but it's too high!`;
+          setSubheading(`I guessed ${guess}, but it's too high!`);
           b = guess;
         } else {
-          document.querySelector(
-            ".subheading"
-          ).textContent = `I guessed ${guess}, but it's too low!`;
+          setSubheading(`I guessed ${guess}, but it's too low!`);
           a = guess;
         }
       }
@@ -63,7 +60,7 @@ function App() {
         Number Guesser
       </h1>
       <h1 className="subheading font-medium text-3xl text-center mt-2 font-mono text-secondary">
-        Simply guesses the number lol.
+        {subheading}
       </h1>
       {isGameOver ? (
         <div className="flex items-center justfy-center flex-col mt-10 gap-0">
@@ -72,7 +69,11 @@ function App() {
           </h1>
           <button
             className="bg-secondary text-primary font-bold text-3xl rounded-xl w-45 h-20 mt-5 hover:bg-secondary/80 transition duration-300 p-3"
-            onClick={() => setIsGameOver(false)}
+            onClick={() => {
+              setIsGameOver(false);
+              setNumber(0);
+              setSubheading("Simply guesses the number lol.");
+            }}
           >
             Play Again
           </button>
